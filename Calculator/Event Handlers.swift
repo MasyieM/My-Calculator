@@ -36,6 +36,11 @@ class EventHandler: ObservableObject {
         newNumber = true
     }
     
+//    func buttonACPressed() {
+//        calculatorDisplay = "0"
+//        newNumber = true
+//    }
+    
     //selects the operator based on the operator button pressed
     func operatorButtonPressed(operatorChosen: String){
         calculationOperator = operatorChosen
