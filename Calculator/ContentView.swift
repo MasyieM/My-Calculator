@@ -15,11 +15,15 @@ struct CalculatorView: View {
     
     var body: some View {
         VStack {
-            //display text
-            Text(eventHandler.calculatorDisplay)
+            
+            HStack (spacing: 12){
+                //display text
+                Text(eventHandler.calculatorDisplay)
+                Text(eventHandler.calculationOperator)
+            }
             
             //buttons row 1
-            HStack {
+            HStack(spacing: 12){
                 Button("7") {
                     eventHandler.digitButtonPressed(digit: "7")
                 }
@@ -35,7 +39,7 @@ struct CalculatorView: View {
             }
             
             //buttons row 2
-            HStack {
+            HStack(spacing: 12){
                 Button("4") {
                     eventHandler.digitButtonPressed(digit: "4")
                 }
@@ -51,7 +55,7 @@ struct CalculatorView: View {
             }
             
             //buttons row 3
-            HStack {
+            HStack(spacing: 12){
                 Button("1") {
                     eventHandler.digitButtonPressed(digit: "1")
                 }
@@ -67,7 +71,7 @@ struct CalculatorView: View {
             }
             
             //buttons row 4
-            HStack {
+            HStack(spacing: 12){
                 Button("0") {
                     eventHandler.digitButtonPressed(digit: "0")
                 }

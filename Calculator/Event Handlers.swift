@@ -12,14 +12,15 @@ class EventHandler: ObservableObject {
     
     @Published var calculatorDisplay: String = "0"
     
+    @Published var calculationOperator: String = ""
+    
     var newNumber: Bool = true
     
-    var firstNumber: String = ""
+    var firstNumber: String = "0"
     
-    var secondNumber: String = ""
+    var secondNumber: String = "0"
     
-    var calculationOperator: String = ""
-
+    
     //assigns the value of the button pressed to calculator display
     func digitButtonPressed(digit: String) {
         if newNumber {
@@ -33,25 +34,33 @@ class EventHandler: ObservableObject {
     //resets the display to 0
     func buttonACPressed() {
         calculatorDisplay = "0"
+        firstNumber = "0"
+        secondNumber = "0"
+        calculationOperator = ""
         newNumber = true
     }
     
-//    func buttonACPressed() {
-//        calculatorDisplay = "0"
-//        newNumber = true
-//    }
     
     //selects the operator based on the operator button pressed
-    func operatorButtonPressed(operatorChosen: String){
+    func operatorButtonPressed(operatorChosen: String) {
         calculationOperator = operatorChosen
         firstNumber = calculatorDisplay
-        calculatorDisplay = "0"
+        newNumber = true
+    }
+    
+    func roundUp(_ value: Double, decimals: Int) -> Double {
+        let factor = pow(10.0, Double(decimals))
+        return ceil(value * factor) / factor
     }
     
     func equalSignButtonPressed() {
-        let number1: Int = Int(firstNumber)!
-        let number2: Int = Int(secondNumber)!
-        var result: Int = 0
+        
+        //saves the digits pressed before pressing the equal button
+        secondNumber = calculatorDisplay
+        
+        let number1: Double = Double(firstNumber) ?? 0
+        let number2: Double = Double(secondNumber) ?? 0
+        var result: Double = 0
         
         switch calculationOperator {
         case "+":
@@ -64,10 +73,18 @@ class EventHandler: ObservableObject {
             result = number1 * number2
             calculatorDisplay = "\(result)"
         case "/":
-            result = number1 / number2
+            if number2 == 0 {
+                calculatorDisplay = "Error"
+                return
+            }
+            result = roundUp(number1 / number2, decimals: 2)
             calculatorDisplay = "\(result)"
         default:
-            calculatorDisplay = "error"
+            calculatorDisplay = "0"
         }
+        newNumber = true
+        firstNumber = "0"
+        secondNumber = "0"
+        calculationOperator = ""
     }
 }
