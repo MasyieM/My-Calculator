@@ -16,9 +16,9 @@ class EventHandler: ObservableObject {
     
     var newNumber: Bool = true
     
-    var firstNumber: String = "0"
+    var firstNumber: String = ""
     
-    var secondNumber: String = "0"
+    var secondNumber: String = ""
     
     
     //assigns the value of the button pressed to calculator display
@@ -34,8 +34,8 @@ class EventHandler: ObservableObject {
     //resets the display to 0
     func buttonACPressed() {
         calculatorDisplay = "0"
-        firstNumber = "0"
-        secondNumber = "0"
+        firstNumber = ""
+        secondNumber = ""
         calculationOperator = ""
         newNumber = true
     }
@@ -55,6 +55,11 @@ class EventHandler: ObservableObject {
     
     func equalSignButtonPressed() {
         
+        // User pressed '=' without entering a second number
+        if newNumber {
+            return
+        }
+        
         //saves the digits pressed before pressing the equal button
         secondNumber = calculatorDisplay
         
@@ -65,26 +70,25 @@ class EventHandler: ObservableObject {
         switch calculationOperator {
         case "+":
             result = number1 + number2
-            calculatorDisplay = "\(result)"
         case "-":
             result = number1 - number2
-            calculatorDisplay = "\(result)"
         case "X":
             result = number1 * number2
-            calculatorDisplay = "\(result)"
         case "/":
             if number2 == 0 {
                 calculatorDisplay = "Error"
                 return
             }
             result = roundUp(number1 / number2, decimals: 2)
-            calculatorDisplay = "\(result)"
+        case "":
+            return //User entered the first number without pressing any operator button
         default:
             calculatorDisplay = "0"
         }
+        calculatorDisplay = "\(result)"
         newNumber = true
-        firstNumber = "0"
-        secondNumber = "0"
+        firstNumber = ""
+        secondNumber = ""
         calculationOperator = ""
     }
 }

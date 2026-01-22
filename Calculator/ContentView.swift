@@ -73,7 +73,9 @@ struct CalculatorView: View {
             //buttons row 4
             HStack(spacing: 12){
                 Button("0") {
-                    eventHandler.digitButtonPressed(digit: "0")
+                    if !eventHandler.calculatorDisplay.hasPrefix("0") {
+                        eventHandler.digitButtonPressed(digit: "0")
+                    }
                 }
                 Button("AC") {
                     eventHandler.buttonACPressed()
